@@ -1,13 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200;400&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Kanit', sans-serif;
+  background-color: #23272a;
+  font-size: 16px;
+  color: #fff;
+  box-sizing: border-box;
+}
+h1 {
+  margin: 0;
+}
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  color: #fff;
+}
+input {
+  outline: none;
+}
+ul, li {
+  margin:0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+ /* Desktop container  */
+.content {
+  height: 100vh;
+  width: 90vw;
+  margin: 0 5vw;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Nav bar positioning and styling */
+.l-header {  
+  display: flex;
+  align-items: center;
+  padding: calc(5vh/2) 5vw;
+  background-color: #15181e;
+}
+.l-nav {
+  display: flex;
+  align-items: center;
+}
+.c-header-h1 {
+  padding: 5px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-right: calc(10rem/16);
+}
+.c-tab-label {
+  opacity: 0.5;
+  font-size: calc(12rem / 16);
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 7px;
+}
+.c-tab-label:hover {
+  opacity: 1;  
+}
+.c-tab-label--first {
+  margin: 0;
+}
+/* main components background and layout */
+.l-main-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  height: fit-content;
+}
+.m-shopping-list {  
+  /* margin: 10px 0; */
+  height: 65vh;
+  width: 100%;
+  position: relative;  
+}
+.l-setup-receipt {
+  height: 20vh;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  grid-column: 1 / 2;
+}
+/* main components styling */
+.m-shopping-list, 
+.l-setup-receipt,
+.m-crafts,
+.m-selling,
+.m-inventory {
+  position: relative;
+  background-color: #22252b;
+  border: none;
+  border-radius: 15px;
+  -webkit-box-shadow: inset 0px 0px 3px 1px rgba(69,69,69,0.6);
+  -moz-box-shadow: inset 0px 0px 3px 1px rgba(69,69,69,0.6);
+  box-shadow: inset 0px 0px 3px 1px rgba(69,69,69,0.6);
+  margin: 10px 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+/* Shopping-list styling */
+.c-shopping-list__h1, .c-inventory__h1{
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-right: calc(10rem/16);
+}
+.o-shopping-list__item {
+  display: grid;  
+  grid-template-columns: 6fr 1fr;
+  text-align: center;
+}
+.c-shopping-list__item-name {
+  font-size: 1.1rem;
+  text-align: left;
+  padding-left: 15px;  
+}
+.c-buyout-btn, .c-crafts__sell-btn, .c-selling__sold-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: calc(5rem/16) calc(7rem/16);
+  margin: 15px;
+  border-radius: 15px;
+  background-color: #044b24;
+}
+
+/* Profits styling  */
+.m-receipt, .m-setup {
+  width: 50%;
+}
+.l-receipt__subtotal,
+.l-receipt__total,
+.l-profits__estimated,
+.l-profits__net {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.c-receipt__value {
+  font-weight: 200;
+  font-size: calc(14rem/16);
+  color: goldenrod;
+}
+.c-receipt__label, .c-setup__label, .c-inventory-item__label {
+  text-align: right;
+  padding-right: 5px;
+  font-size: calc(13rem/16);
+}
+
+/* crafts styling */
+.m-crafts, .m-selling {
+  width: 100%;
+  padding: 15px;  
+}
+.l-crafts__labels, .l-selling__labels {
+  display: grid;
+  font-size: calc(12rem/16);
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 2fr 8fr 2fr 1fr;
+}
+.l-sell-all {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.c-item__name {
+  font-size: calc(12rem/16);
+  padding: 3px;
+}
+.o-item {
+  display: grid;
+  grid-template-columns: 2fr 8fr 2fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 5px 0;
+}
+.c-item__profit, .c-item__ah-price, .c-setup__input, .c-inventory-item__input {
+  font-size: calc(13rem/16);
+}
+.c-item__ah-price, .c-setup__input, .c-inventory-item__input {
+  width: 100%;
+  background-color: transparent;
+  padding: 2px;
+  border: none;
+  margin: 0;
+  color: goldenrod;  
+}
+.c-item__ah-price:focus, .c-setup__input:focus, .c-inventory-item__input:focus {  
+  outline: #15181e solid 1px;  
+}
+.c-crafts__sell-btn {
+  background-color: #00234c;
+}
+
+/* Selling styling */
+.c-selling__sold-btn {
+  background-color: #ff2929;
+}
+
+/* setup styling */
+/* .l-gold-threshold, .l-profit-range {
+  
+
+} */
+.l-setup__inputs {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+}
+.c-profit-range__input {
+  color: #fff;
+}
+.c-gold-threshold__input-slidebar {  
+  margin-right: 5px;  
+  width: 100%;    
+}
+
+/* Invetory styling and layout */
+.m-inventory {
+  grid-column: 1 / 4;
+}
+.l-inventory-items {  
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+.c-inventory__h1 {
+  text-align: center;
+}
+.l-price, .l-quantity {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.o-inventory-item {
+  text-align: center;
+}
+.c-inventory-item__input-quantity {
+  color: #ffff;
 }
