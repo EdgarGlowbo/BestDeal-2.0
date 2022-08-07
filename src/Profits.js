@@ -5,15 +5,31 @@ const Profits = () => {
         <div className="l-gold-threshold">
           <span className="c-setup__label c-gold-threshold__label">Gold threshold:</span>
           <div className="l-setup__inputs">
-            <input className="c-setup__input c-gold-threshold__input-slidebar" type="range" step="1000"  max="214000"/>
-            <input className="c-setup__input c-gold-threshold__input" value="20000"></input>
+            <input            
+              className="c-setup__input c-gold-threshold__input-slidebar"
+              type="range"
+              // step="1000" 
+              // max="214000"              
+            />
+            <input
+              className="c-setup__input c-gold-threshold__input"
+              // value="20000"
+            />
           </div>          
         </div>
         <div className="l-profit-range">
           <span className="c-setup__label c-profit-range__label">Profit:</span>
           <div className="l-setup__inputs">
-            <input className="c-setup__input c-profit-range__input-slidebar" type="range" step="50" max="5000"/>
-            <input className="c-setup__input c-profit-range__input" value="350"></input>
+            <input              
+              className="c-setup__input c-profit-range__input-slidebar"
+              type="range"
+              // step="50"
+              // max="5000"              
+            />
+            <input
+              className="c-setup__input c-profit-range__input"
+              // value="350"
+            />
           </div>          
         </div>
       </div>

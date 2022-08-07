@@ -10,13 +10,13 @@ import Inventory from "./Inventory";
 
 const Crafts = () => {
   const craftsColRef = collection(db, "Items");
-  const currPage = "Blacksmithing"; // useParams get page user is on
+  const currPage = "Tailoring"; // useParams get page user is on
   const q = query(craftsColRef, where("category", "==", currPage), orderBy("profit", "desc"));  
   const { data:crafts } = useFetch(q); // calls useFetch with q to fetch crafts data
   const recipes = [];  
   return (
     <React.Fragment>
-      <form className="m-crafts">
+      <div className="m-crafts">
         <div className="l-crafts__main">
           <div className="l-crafts__labels">
             <span className="c-crafts__label c-ah-price-label">AH price</span>
@@ -34,7 +34,10 @@ const Crafts = () => {
               recipes.push(...recipeKeys);          
               return (
                 <li className="o-item" key={data.id}>                
-                  <input className="c-item__ah-price" value={data.price}/>                    
+                  <input
+                    className="c-item__ah-price"
+                    // value={data.price}                  
+                  />                    
                   <span className="c-item__name">{data.name}</span>        
                   <span className="c-item__profit">${data.profit}</span>                                            
                   <input className="c-item__sell-input" type="checkbox" tabIndex={-1}></input>
@@ -46,7 +49,7 @@ const Crafts = () => {
         <div className="l-crafts__footer">
           <button className="c-crafts__sell-btn">Sell</button>
         </div>
-      </form>
+      </div>
       <Selling />                         
       {recipes.length > 0 && <Inventory recipes={recipes}/>}            
     </React.Fragment>

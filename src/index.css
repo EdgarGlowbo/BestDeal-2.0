@@ -20,6 +20,11 @@ button {
 input {
   outline: none;
 }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 ul, li {
   margin:0;
   padding: 0;
@@ -222,12 +227,14 @@ ul, li {
 /* Invetory styling and layout */
 .m-inventory {
   grid-column: 1 / 4;
+  margin-bottom: 10px;
 }
 .l-inventory-items {  
   padding: 15px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
+  padding-top: 0;
 }
 .c-inventory__h1 {
   text-align: center;
