@@ -6,14 +6,24 @@ const useFetch = (q) => {
   useEffect(() => {
     const fetchDocs = async () => {
       const docSnapshot = await getDocs(q);      
-      const data = []    
-      docSnapshot.forEach(doc => {         
-        data.push(doc);
+      const data = {}      
+      // data.push(doc);    
+      docSnapshot.forEach(item => {                        
+        const itemData = item.data();                
+        Object.assign(data, {[itemData.id]: {
+          price: itemData.price,            
+          name: itemData.name,
+          id: itemData.id,
+          category: itemData.category,
+          craftCost: itemData.craftCost,
+          profit: itemData.profit,
+          recipe: itemData.recipe,
+        }});                          
       });
-      setData(data);
+      setData(data);          
     }
     fetchDocs();
   }, []);
-  return { data };
+  return { data, setData };
 } 
 export default useFetch;

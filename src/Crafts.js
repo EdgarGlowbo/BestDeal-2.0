@@ -1,7 +1,8 @@
 import { db } from "./firebaseConfig";
 import {
   collection, query, orderBy,
-  where,
+  where, updateDoc,
+  doc,
 } from "firebase/firestore";
 import useFetch from "./useFetch";
 import React from "react";
@@ -12,8 +13,20 @@ const Crafts = () => {
   const craftsColRef = collection(db, "Items");
   const currPage = "Tailoring"; // useParams get page user is on
   const q = query(craftsColRef, where("category", "==", currPage), orderBy("profit", "desc"));  
-  const { data:crafts } = useFetch(q); // calls useFetch with q to fetch crafts data
-  const recipes = [];  
+  const { data:crafts, setData:setCrafts } = useFetch(q); // calls useFetch with q to fetch crafts data
+  const updateInfo = async (e, id, ref) => {    
+    const value = parseInt(e.target.value);    
+    const name = e.target.name;
+    setCrafts({
+      ...crafts,
+      [id]: {
+        ...crafts[id],
+        [name]: value,
+      }      
+    });
+    await updateDoc(ref, {[name]: value });
+  }
+  const recipes = []; // stores currPage recipes keys to filter mats in inventory 
   return (
     <React.Fragment>
       <div className="m-crafts">
@@ -28,19 +41,20 @@ const Crafts = () => {
             </div>
           </div>
           <ul className="l-crafts__items">
-            { crafts && crafts.map(item => {
-              const data = item.data();
-              const recipeKeys = Object.keys(data.recipe);
+            { crafts && Object.keys(crafts).map(item => {                            
+              const recipeKeys = Object.keys(crafts[item].recipe);
               recipes.push(...recipeKeys);          
               return (
-                <li className="o-item" key={data.id}>                
+                <li className="o-item" key={item}>                
                   <input
                     className="c-item__ah-price"
-                    // value={data.price}                  
+                    value={crafts[item].price}
+                    onChange={(e) => { updateInfo(e, item, doc(db, "Items", item)) }}
+                    name="price"
                   />                    
-                  <span className="c-item__name">{data.name}</span>        
-                  <span className="c-item__profit">${data.profit}</span>                                            
-                  <input className="c-item__sell-input" type="checkbox" tabIndex={-1}></input>
+                  <span className="c-item__name">{crafts[item].name}</span>        
+                  <span className="c-item__profit">${crafts[item].profit}</span>                                            
+                  <input className="c-item__sell-input" type="checkbox" tabIndex={-1} id={item}/>
                 </li>
               );               
             })} 
