@@ -3,27 +3,25 @@ import { useEffect, useState } from "react";
 
 const useFetch = (q) => {
   const [data, setData] = useState(null);
-  useEffect(() => {
+  const [mats, setMats] = useState(null);
+  useEffect(() => {    
     const fetchDocs = async () => {
-      const docSnapshot = await getDocs(q);      
-      const data = {}      
-      // data.push(doc);    
+      const data = {};
+      const matsSet = new Set();      
+      const docSnapshot = await getDocs(q);                    
       docSnapshot.forEach(item => {                        
-        const itemData = item.data();                
-        Object.assign(data, {[itemData.id]: {
-          price: itemData.price,            
-          name: itemData.name,
-          id: itemData.id,
-          category: itemData.category,
-          craftCost: itemData.craftCost,
-          profit: itemData.profit,
-          recipe: itemData.recipe,
-        }});                          
-      });
-      setData(data);          
+        const itemData = item.data();        
+        Object.assign(data, {[itemData.id]: {...itemData}});
+        if (itemData.recipe) { 
+          Object.keys(itemData.recipe).forEach(mat => matsSet.add(mat));          
+        }
+      });    
+      const mats = Array.from(matsSet);    
+      setMats(mats);
+      setData(data);
     }
     fetchDocs();
   }, []);
-  return { data, setData };
+  return { data, setData, mats };
 } 
 export default useFetch;

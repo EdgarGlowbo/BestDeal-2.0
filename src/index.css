@@ -77,14 +77,14 @@ ul, li {
 }
 .m-shopping-list {  
   /* margin: 10px 0; */
-  height: 65vh;
+  height: 50vh;
   width: 100%;
   position: relative;  
 }
 .l-setup-receipt {
-  height: 20vh;
+  height: fit-content;
   width: 100%;
-  padding: 15px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
   grid-column: 1 / 2;
@@ -106,6 +106,7 @@ ul, li {
   margin-bottom: 0;
   box-sizing: border-box;
 }
+
 /* Shopping-list styling */
 .c-shopping-list__h1, .c-inventory__h1{
   padding: 10px 15px;
@@ -119,24 +120,30 @@ ul, li {
   text-align: center;
 }
 .c-shopping-list__item-name {
-  font-size: 1.1rem;
+  font-size: calc(13rem/16);
   text-align: left;
-  padding-left: 15px;  
+  align-self: center;
+  padding-left: 20px;  
 }
-.c-buyout-btn, .c-crafts__sell-btn, .c-selling__sold-btn {
+.c-buyout-btn, .c-crafts__sell-btn {
   position: absolute;
   bottom: 0;
-  right: 0;
-  padding: calc(5rem/16) calc(7rem/16);
-  margin: 15px;
-  border-radius: 15px;
+  right: 0;  
+  margin: 15px;  
   background-color: #044b24;
 }
-
-/* Profits styling  */
-.m-receipt, .m-setup {
-  width: 50%;
+.c-buyout-btn, .c-crafts__sell-btn, .c-selling__sold-btn {
+  padding: calc(5rem/16) calc(7rem/16);  
+  border-radius: 15px;  
 }
+.c-selling__sold-btn {
+  width: 100%;
+}
+/* Profits styling  */
+/* .m-receipt, .m-setup {
+  width: 50%;
+} */
+
 .l-receipt__subtotal,
 .l-receipt__total,
 .l-profits__estimated,
@@ -160,12 +167,13 @@ ul, li {
   width: 100%;
   padding: 15px;  
 }
-.l-crafts__labels, .l-selling__labels {
+.l-crafts__labels, .l-selling__labels, .o-item {
   display: grid;
   font-size: calc(12rem/16);
   align-items: center;
   justify-items: center;
   grid-template-columns: 2fr 8fr 2fr 1fr;
+  text-align: center;
 }
 .l-sell-all {
   display: flex;
@@ -177,14 +185,11 @@ ul, li {
   padding: 3px;
 }
 .o-item {
-  display: grid;
-  grid-template-columns: 2fr 8fr 2fr 1fr;
-  align-items: center;
-  justify-items: center;
   padding: 5px 0;
 }
-.c-item__profit, .c-item__ah-price, .c-setup__input, .c-inventory-item__input {
+.c-item__profit, .c-item__ah-price, .c-setup__input, .c-inventory-item__input, .c-item__craft-cost {
   font-size: calc(13rem/16);
+  width: 100%;  
 }
 .c-item__ah-price, .c-setup__input, .c-inventory-item__input {
   width: 100%;
@@ -200,7 +205,10 @@ ul, li {
 .c-crafts__sell-btn {
   background-color: #00234c;
 }
-
+.c-item__sell-input {
+  margin: 0;
+  transform: scale(1.2);
+}
 /* Selling styling */
 .c-selling__sold-btn {
   background-color: #ff2929;
@@ -227,6 +235,7 @@ ul, li {
 /* Invetory styling and layout */
 .m-inventory {
   grid-column: 1 / 4;
+  margin-top: -15px;
   margin-bottom: 10px;
 }
 .l-inventory-items {  

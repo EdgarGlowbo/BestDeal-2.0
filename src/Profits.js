@@ -1,7 +1,7 @@
 const Profits = () => {
   return (
     <div className="l-setup-receipt">
-      <div className="m-setup">
+      {/* <div className="m-setup">
         <div className="l-gold-threshold">
           <span className="c-setup__label c-gold-threshold__label">Gold threshold:</span>
           <div className="l-setup__inputs">
@@ -32,7 +32,7 @@ const Profits = () => {
             />
           </div>          
         </div>
-      </div>
+      </div> */}
       <div className="m-receipt">
         <div className="o-purchase-cost">
           <div className="l-receipt__subtotal">
