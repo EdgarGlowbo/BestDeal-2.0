@@ -72,7 +72,7 @@ ul, li {
 .l-main-content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 15px;
   height: fit-content;
 }
 .m-shopping-list {  
@@ -104,12 +104,12 @@ ul, li {
   box-shadow: inset 0px 0px 3px 1px rgba(69,69,69,0.6);
   margin: 10px 0;
   margin-bottom: 0;
-  box-sizing: border-box;
+  box-sizing: border-box;  
 }
 
 /* Shopping-list styling */
 .c-shopping-list__h1, .c-inventory__h1{
-  padding: 10px 15px;
+  padding: 5px 15px;
   font-size: 1.2rem;
   font-weight: 400;
   margin-right: calc(10rem/16);
@@ -164,6 +164,7 @@ ul, li {
 
 /* crafts styling */
 .m-crafts, .m-selling {
+  /* max-height: 60vh; */
   width: 100%;
   padding: 15px;  
 }
@@ -213,13 +214,15 @@ ul, li {
 .c-selling__sold-btn {
   background-color: #ff2929;
 }
-
+/* .l-selling__items {
+  overflow: scroll;
+} */
 /* setup styling */
 /* .l-gold-threshold, .l-profit-range {
   
 
 } */
-.l-setup__inputs {
+/* .l-setup__inputs {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 10px;
@@ -230,12 +233,12 @@ ul, li {
 .c-gold-threshold__input-slidebar {  
   margin-right: 5px;  
   width: 100%;    
-}
+} */
 
 /* Invetory styling and layout */
 .m-inventory {
   grid-column: 1 / 4;
-  margin-top: -15px;
+  margin-top: -7.5px;
   margin-bottom: 10px;
 }
 .l-inventory-items {  

@@ -5,20 +5,22 @@ import {
 
 const Inventory = ({ mats, inventory, setInventory }) => {  
   const updateMatInfo = async (e, id, ref, value) => {        
-    const name = e.target.name;
-    if (value) {      
-      setInventory((prevState) => ({
-        ...prevState, // Avoid overwritting the inventory obj
+    const name = e.target.name;                             
+    setInventory(prevInventory => {      
+      if (name === 'quantity') {      
+        mats.forEach(mat => prevInventory[mat].difference = 0); // reset every mat diff to 0 
+      }  
+      return ({
+        ...prevInventory,
         [id]: {
-          ...prevState[id], // Avoid overwritting the inventory[id] obj          
-          [name]: value,
-          difference: name === 'quantity' ? parseInt(prevState[id].quantity - value) : prevState[id].difference // Calculate diff only if name is quantity
-        }      
-      }));                
-      await updateDoc(ref, {[name]: parseInt(value) });            
-    }        
+          ...prevInventory[id],
+          difference: name === 'quantity' ? parseInt(prevInventory[id].quantity - value) : 0,
+          [name]: value
+        }
+      })
+    });
+    await updateDoc(ref, {[name]: value });
   }
-
   return (
     <div className="m-inventory">
       <h1 className="c-inventory__h1">Inventory</h1>        
@@ -34,7 +36,15 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                     name="price"
                     type="number"
                     value={inventory[mat].price}
-                    onChange={(e) => updateMatInfo(e, mat, doc(db, "Inventory", mat), e.target.value)}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value);
+                      updateMatInfo(
+                        e,
+                        mat,
+                        doc(db, "Inventory", mat),
+                        value !== value ? 0 : value
+                      )
+                    }}
                   />
                 </div>
                 <div className="l-quantity">
@@ -44,7 +54,15 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                     name="quantity"
                     type="number"
                     value={inventory[mat].quantity}
-                    onChange={(e) => updateMatInfo(e, mat, doc(db, "Inventory", mat), parseInt(e.target.value))}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value);
+                      updateMatInfo(
+                        e,
+                        mat,
+                        doc(db, "Inventory", mat),
+                        value !== value ? 0 : value
+                      )
+                    }}
                   />
                 </div>
               </li>

@@ -11,7 +11,7 @@ const useFetch = (q) => {
       const docSnapshot = await getDocs(q);                    
       docSnapshot.forEach(item => {                        
         const itemData = item.data();        
-        Object.assign(data, {[itemData.id]: {...itemData}});
+        Object.assign(data, {[item.id]: {...itemData, id: item.id}});        
         if (itemData.recipe) { 
           Object.keys(itemData.recipe).forEach(mat => matsSet.add(mat));          
         }

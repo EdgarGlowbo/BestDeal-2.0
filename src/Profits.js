@@ -1,4 +1,26 @@
-const Profits = () => {
+import { useEffect, useState } from "react";
+
+const Profits = ({ shoppingList, inventory, checkedBox, crafts}) => {
+  const [subtotal, setSubtotal] = useState(0);
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    let sumSubtotal = 0;
+    Object.keys(shoppingList).forEach(mat => {
+      if (shoppingList[mat].quantity > 0) {
+        sumSubtotal += inventory[mat].price * shoppingList[mat].quantity;
+      }      
+    });
+    setSubtotal(sumSubtotal);
+  }, [shoppingList]);
+  useEffect(() => {
+    let sumTotal = 0;
+    if (checkedBox.length > 0) {
+      checkedBox.forEach(item => {
+        sumTotal += crafts[item].craftCost;
+      });
+    }  
+    setTotal(sumTotal);
+  }, [crafts, checkedBox]);
   return (
     <div className="l-setup-receipt">
       {/* <div className="m-setup">
@@ -37,11 +59,11 @@ const Profits = () => {
         <div className="o-purchase-cost">
           <div className="l-receipt__subtotal">
             <span className="c-receipt__subtotal-label c-receipt__label">Subtotal:</span>
-            <span className="c-receipt__subtotal-value c-receipt__value">$15000</span>
+            <span className="c-receipt__subtotal-value c-receipt__value">${subtotal}</span>
           </div>
           <div className="l-receipt__total">
             <span className="c-receipt__total-label c-receipt__label">Total:</span>
-            <span className="c-receipt__total-value c-receipt__value">$44000</span>
+            <span className="c-receipt__total-value c-receipt__value">${total}</span>
           </div>      
         </div>
         <div className="o-profits">
@@ -49,10 +71,10 @@ const Profits = () => {
             <span className="c-profits__estimated-label c-receipt__label">Estimated profits:</span>
             <span className="c-profits__estimated-value c-receipt__value">$5000</span>
           </div>
-          <div className="l-profits__net">
+          {/* <div className="l-profits__net">
             <span className="c-profits__net-label c-receipt__label">Current profits:</span>
             <span className="c-profits__net-value c-receipt__value">-$12300</span>
-          </div>      
+          </div>       */}
         </div>
       </div>
     </div>    
