@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Profits from "./Profits";
-const ShoppingList = ({ mats, inventory, crafts, itemID, checkedBox, setCheckedBox }) => {  
+const ShoppingList = ({ mats, inventory, crafts, itemID, checkedBox, setCheckedBox, setBuyoutIsDisplayed, setShoppingListKeys, shoppingListKeys }) => {  
   const createShoppingList = () => {
     const shoppingListObj = {};
     mats.forEach(mat => {      
@@ -53,7 +53,8 @@ const ShoppingList = ({ mats, inventory, crafts, itemID, checkedBox, setCheckedB
     }    
   }, [checkedBox]);
   useEffect(() => {
-    console.log(shoppingList);
+    const keys = Object.keys(shoppingList).filter(mat => shoppingList[mat].quantity > 0);
+    setShoppingListKeys(keys);
   }, [shoppingList])
   return (
     <React.Fragment>
@@ -62,14 +63,20 @@ const ShoppingList = ({ mats, inventory, crafts, itemID, checkedBox, setCheckedB
         <div className="l-shopping-list__items">
           {shoppingList && Object.keys(shoppingList).filter(mat => shoppingList[mat].quantity > 0).map(mat => {
             return (
-              <div className="o-shopping-list__item" key={mat}>                  
+              <div className="o-shopping-list__item" key={mat} id={mat}>
                 <span className="c-shopping-list__item-name">{shoppingList[mat].name}</span>
                 <span className="c-shopping-list__item-quantity">{shoppingList[mat].quantity}</span>
               </div>
             )}         
           )}
         </div>
-        <button className="c-buyout-btn">Buyout</button>
+        <button className="c-buyout-btn"
+          onClick={() => { if (shoppingListKeys.length > 0) {
+            setBuyoutIsDisplayed(true);
+          } }          
+        }>
+          Buyout
+        </button>
       </div>
       {shoppingList && <Profits
         shoppingList={shoppingList}

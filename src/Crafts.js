@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import Selling from "./Selling";
 import Inventory from "./Inventory";
 import ShoppingList from "./ShoppingList";
+import Buyout from "./Buyout";
 
 const Crafts = () => {
   const craftsColRef = collection(db, "Items");
@@ -23,6 +24,8 @@ const Crafts = () => {
   const auctionsColRef = collection(db, 'InSale');
   const auctionsQ = query(auctionsColRef, where("category", "==", currPage));
   const { data:auctions, setData:setAuctions } = useFetch(auctionsQ);  // fetchs Selling data
+  const [buyoutIsDisplayed, setBuyoutIsDisplayed] = useState(false);
+  const [shoppingListKeys, setShoppingListKeys] = useState([]);
   
  // AH price updates with this func
   const updateInfo = async (e, id, ref, value) => {    
@@ -50,13 +53,11 @@ const Crafts = () => {
           matsSet.add(mat);        
           currInventory[mat].quantity -= recipe[mat];                  
         });                                         
-      });
-      
+      });      
       matsSet.forEach(mat => {          
         // currInventory[mat].difference = prevInventory[mat].quantity - currInventory[mat].quantity;                  
         currInventory[mat].difference = 0; 
-      });
-      console.log({prevInventory, currInventory})
+      });      
       matsSet.forEach(async mat => {
         const docRef = doc(db, "Inventory", mat);               
         await updateDoc(docRef, {
@@ -127,9 +128,20 @@ const Crafts = () => {
           crafts={crafts}
           itemID={itemID}
           checkedBox={checkedBox}
-          setCheckedBox={setCheckedBox}     
+          setCheckedBox={setCheckedBox}
+          setBuyoutIsDisplayed={setBuyoutIsDisplayed}
+          setShoppingListKeys={setShoppingListKeys}
+          shoppingListKeys={shoppingListKeys}
         />}        
       </div>
+      {buyoutIsDisplayed && shoppingListKeys.length > 0 && <Buyout
+        buyoutIsDisplayed={buyoutIsDisplayed}
+        setBuyoutIsDisplayed={setBuyoutIsDisplayed}
+        shoppingListKeys={shoppingListKeys}
+        inventory={inventory}
+        setInventory={setInventory}
+        mats={mats}
+      />}
       <div className="m-crafts">
         <div className="l-crafts__main">
           <div className="l-crafts__labels">
@@ -163,7 +175,7 @@ const Crafts = () => {
                       name="price"
                     />                    
                     <span className="c-item__name">{crafts[item].name}</span>        
-                    <span className="c-item__profit">{crafts[item].profit > 0 ? `$${crafts[item].profit}` : `-$${Math.abs(crafts[item].profit)}`}</span>                                            
+                    <span className="c-item__profit">{crafts[item].profit >= 0 ? `$${crafts[item].profit}` : `-$${Math.abs(crafts[item].profit)}`}</span>                                            
                     <input className="c-item__sell-input"
                       type="checkbox"
                       tabIndex={-1}

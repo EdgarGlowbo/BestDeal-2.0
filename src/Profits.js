@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const Profits = ({ shoppingList, inventory, checkedBox, crafts}) => {
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const [profit, setProfit] = useState(0);
   useEffect(() => {
     let sumSubtotal = 0;
     Object.keys(shoppingList).forEach(mat => {
@@ -14,12 +15,15 @@ const Profits = ({ shoppingList, inventory, checkedBox, crafts}) => {
   }, [shoppingList]);
   useEffect(() => {
     let sumTotal = 0;
+    let sumProfit = 0;
     if (checkedBox.length > 0) {
       checkedBox.forEach(item => {
         sumTotal += crafts[item].craftCost;
+        sumProfit += crafts[item].profit;
       });
     }  
     setTotal(sumTotal);
+    setProfit(sumProfit);
   }, [crafts, checkedBox]);
   return (
     <div className="l-setup-receipt">
@@ -69,7 +73,7 @@ const Profits = ({ shoppingList, inventory, checkedBox, crafts}) => {
         <div className="o-profits">
           <div className="l-profits__estimated">
             <span className="c-profits__estimated-label c-receipt__label">Estimated profits:</span>
-            <span className="c-profits__estimated-value c-receipt__value">$5000</span>
+            <span className="c-profits__estimated-value c-receipt__value">{profit >= 0 ? `$${profit}` : `-$${Math.abs(profit)}`}</span>
           </div>
           {/* <div className="l-profits__net">
             <span className="c-profits__net-label c-receipt__label">Current profits:</span>

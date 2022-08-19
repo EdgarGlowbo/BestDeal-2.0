@@ -94,7 +94,8 @@ ul, li {
 .l-setup-receipt,
 .m-crafts,
 .m-selling,
-.m-inventory {
+.m-inventory,
+.m-buyout {
   position: relative;
   background-color: #22252b;
   border: none;
@@ -260,4 +261,68 @@ ul, li {
 }
 .c-inventory-item__input-quantity {
   color: #ffff;
+}
+
+/* Buyout styling */
+.m-buyout {
+  position: absolute;
+  padding: 15px;
+  z-index: 1;
+  top: 50%;  
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
+.m-buyout--focus {  
+  box-shadow: 0 0 0 9999px #000000b0;
+}
+.o-buyout__options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: flex-end;
+  padding: 10px 0;
+  margin: 0 18%;
+  margin-right: 0;
+}
+.c-buyout__price-input,
+.c-buyout__quantity-input {
+  border-radius: 15px;
+  width: 40%;
+  border: none;
+  text-align: center;
+  justify-content: flex-end;
+  margin-left: 5px;
+}
+.l-buyout__price,
+.l-buyout__quantity {
+  text-align: end;  
+}
+.l-buyout__quantity {
+  margin-left: 10px;
+}
+.c-mat-name {
+  font-size: calc(18rem / 16);
+  font-weight: 400;
+  padding: 0 8px;
+}
+.l-buyout__btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+.c-buyout__cancel, .c-buyout__buy{
+  border-radius: 3px;
+  width: 30%;
+  background-color: #ff2929;
+  padding: 3px 5px;
+  margin: 0 3px;
+  margin-right: 0;
+}
+.c-buyout__quantity-label,
+.c-buyout__price-label {
+  font-weight: 100;
+  font-size: calc(12rem/16);
+
 }
