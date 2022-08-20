@@ -1,7 +1,8 @@
 import Header from "./Header";
 import Crafts from "./Crafts";
 import {
-  Route, BrowserRouter as Router,  
+  Route, BrowserRouter as Router,
+  Routes  
 } from "react-router-dom";
 import { useState } from "react";
 
@@ -15,8 +16,10 @@ function App() {
           setCurrPage={setCurrPage}
         />               
         <div className="content">
-          <div className="l-main-content">                    
-            <Route path='/' exact component={<Crafts currPage={currPage}/>}/>                                           
+          <div className="l-main-content">
+            <Routes>
+              <Route path='/' exact element={<Crafts currPage={currPage}/>}/>                                           
+            </Routes>            
           </div>                               
         </div>
       </div>      
