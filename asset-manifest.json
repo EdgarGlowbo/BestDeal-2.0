@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/BestDeal/static/css/main.c4a97268.css",
+    "main.js": "/BestDeal/static/js/main.fe57a125.js",
+    "index.html": "/BestDeal/index.html",
+    "main.c4a97268.css.map": "/BestDeal/static/css/main.c4a97268.css.map",
+    "main.fe57a125.js.map": "/BestDeal/static/js/main.fe57a125.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c4a97268.css",
+    "static/js/main.fe57a125.js"
+  ]
+}
