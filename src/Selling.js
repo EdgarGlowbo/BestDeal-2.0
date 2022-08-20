@@ -5,8 +5,7 @@ const Selling = ({ crafts, auctions, setAuctions }) => {
   const markAsSold = async (e, id) => {
     const auctionsObj = structuredClone(auctions);
     await deleteDoc(doc(db, "InSale", id));
-    delete auctionsObj[id];
-    console.log(auctionsObj);
+    delete auctionsObj[id];    
     setAuctions(auctionsObj);
   }
   return (
@@ -19,7 +18,7 @@ const Selling = ({ crafts, auctions, setAuctions }) => {
           <span className="c-sell-all__label">Status</span>                      
         </div>
         <div className="l-selling__items">
-          {Object.keys(auctions).map(id => {
+          {Object.keys(auctions).map(id => {            
             const craftsID = auctions[id].craftID;
             const price = crafts[craftsID].price;
             return (

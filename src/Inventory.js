@@ -45,6 +45,7 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                         value !== value ? 0 : value
                       )
                     }}
+                    autoComplete="off"
                   />
                 </div>
                 <div className="l-quantity">
@@ -63,6 +64,7 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                         value !== value ? 0 : value
                       )
                     }}
+                    autoComplete="off"
                   />
                 </div>
               </li>

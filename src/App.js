@@ -1,16 +1,27 @@
 import Header from "./Header";
 import Crafts from "./Crafts";
+import {
+  Route, BrowserRouter as Router,
+  useRoutes
+} from "react-router-dom";
+import { useState } from "react";
 
 function App() {
-  return (    
-    <div className="App">
-      <Header />
-      <div className="content">
-        <div className="l-main-content">
-          <Crafts />                  
-        </div>                               
-      </div>
-    </div>         
+  const [currPage, setCurrPage] = useState("Blacksmithing");
+ 
+  return (
+    // <Router>
+      <div className="App">
+        <Header        
+          setCurrPage={setCurrPage}
+        />        
+        <div className="content">
+          <div className="l-main-content">          
+            <Crafts currPage={currPage}/>                                
+          </div>                               
+        </div>
+      </div>      
+    // </Router>       
   );
 }
 

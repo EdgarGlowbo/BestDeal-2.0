@@ -1,7 +1,7 @@
 import { getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-const useFetch = (q) => {
+const useFetch = (q, currPage) => {
   const [data, setData] = useState(null);
   const [mats, setMats] = useState(null);
   useEffect(() => {    
@@ -20,8 +20,8 @@ const useFetch = (q) => {
       setMats(mats);
       setData(data);
     }
-    fetchDocs();
-  }, []);
+    if (currPage) fetchDocs();
+  }, [currPage]);
   return { data, setData, mats };
 } 
 export default useFetch;

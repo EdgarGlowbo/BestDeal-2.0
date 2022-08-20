@@ -10,20 +10,18 @@ import Selling from "./Selling";
 import Inventory from "./Inventory";
 import ShoppingList from "./ShoppingList";
 import Buyout from "./Buyout";
-
-const Crafts = () => {
-  const craftsColRef = collection(db, "Items");
-  const currPage = "Leatherworking"; // useParams get page user is on
-  const q = query(craftsColRef, where("category", "==", currPage));    
-  const { data:crafts, setData:setCrafts, mats } = useFetch(q); // calls useFetch with q to fetch crafts data
+const Crafts = ({ currPage }) => {  
+  const craftsColRef = collection(db, "Items");  
+  const q = query(craftsColRef, where("category", "==", currPage));  
+  const { data:crafts, setData:setCrafts, mats } = useFetch(q, currPage); // calls useFetch with q to fetch crafts data. currPage is useFetch dependency 
   const inventoryColRef = collection(db, "Inventory");
   const inventoryQ = query(inventoryColRef, orderBy("name"));
-  const { data:inventory, setData:setInventory } = useFetch(inventoryQ);
+  const { data:inventory, setData:setInventory } = useFetch(inventoryQ, currPage);
   const [itemID, setItemID] = useState(null);
   const [checkedBox, setCheckedBox] = useState([]);
-  const auctionsColRef = collection(db, 'InSale');
+  const auctionsColRef = collection(db, 'InSale');  
   const auctionsQ = query(auctionsColRef, where("category", "==", currPage));
-  const { data:auctions, setData:setAuctions } = useFetch(auctionsQ);  // fetchs Selling data
+  const { data:auctions, setData:setAuctions } = useFetch(auctionsQ, currPage);  // fetchs Selling data
   const [buyoutIsDisplayed, setBuyoutIsDisplayed] = useState(false);
   const [shoppingListKeys, setShoppingListKeys] = useState([]);
   
@@ -54,10 +52,7 @@ const Crafts = () => {
           currInventory[mat].quantity -= recipe[mat];                  
         });                                         
       });      
-      matsSet.forEach(mat => {          
-        // currInventory[mat].difference = prevInventory[mat].quantity - currInventory[mat].quantity;                  
-        currInventory[mat].difference = 0; 
-      });      
+      matsSet.forEach(mat => currInventory[mat].difference = 0);      
       matsSet.forEach(async mat => {
         const docRef = doc(db, "Inventory", mat);               
         await updateDoc(docRef, {
@@ -94,16 +89,13 @@ const Crafts = () => {
             }
           });                
         })
-      ).then(() => {
-          // setItemID(null);
-          // setCheckedBox([]); // empty checkbox  
+      ).then(() => {                    
           setAuctions(auctionsObj); // add items to auctions section
       });  
     } else {
       alert('Not enough items');
-    }
-         
-  };
+    }         
+  };  
   // update craft cost and possibly profit
   useEffect(() => {     
     const craftsObj = {...crafts};
@@ -121,7 +113,7 @@ const Crafts = () => {
   return (
     <React.Fragment>
       <div className="l-left-side-bar">
-        {inventory && <ShoppingList
+        {inventory &&<ShoppingList
           mats={mats}
           inventory={inventory}
           setInventory={setInventory}
@@ -192,7 +184,7 @@ const Crafts = () => {
           <button className="c-crafts__sell-btn" onClick={sellItems}>Sell</button>
         </div>
       </div>
-      {auctions && <Selling   
+      {auctions && crafts && <Selling   
         crafts={crafts}
         auctions={auctions}
         setAuctions={setAuctions}

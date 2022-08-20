@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Profits from "./Profits";
-const ShoppingList = ({ mats, inventory, crafts, itemID, checkedBox, setCheckedBox, setBuyoutIsDisplayed, setShoppingListKeys, shoppingListKeys }) => {  
-  const createShoppingList = () => {
-    const shoppingListObj = {};
+const ShoppingList = ({
+  mats, inventory, crafts,
+  itemID, checkedBox, setCheckedBox,
+  setBuyoutIsDisplayed, setShoppingListKeys, shoppingListKeys
+}) => {  
+  // const createShoppingList = () => {
+  //   const shoppingListObj = {};  
+  //   mats.forEach(mat => {      
+  //     Object.assign(shoppingListObj, {
+  //       [mat]: {
+  //         name: inventory[mat].name,
+  //         quantity: 0 - inventory[mat].quantity
+  //       }
+  //     });
+  //   });    
+  //   return shoppingListObj;
+  // };
+  // const [shoppingList, setShoppingList] = useState(createShoppingList());
+  const [shoppingList, setShoppingList] = useState({});
+  useEffect(() => {    
+    const shoppingListObj = {};  
     mats.forEach(mat => {      
       Object.assign(shoppingListObj, {
         [mat]: {
@@ -11,17 +29,18 @@ const ShoppingList = ({ mats, inventory, crafts, itemID, checkedBox, setCheckedB
         }
       });
     });    
-    return shoppingListObj;
-  };
-  const [shoppingList, setShoppingList] = useState(createShoppingList());
+    setShoppingList(shoppingListObj);
+  }, [mats]);
   // update shoppingList on inventory update    
   useEffect(() => {    
-    setShoppingList(prevShoppingList => {      
-      const currShoppingList = structuredClone(prevShoppingList);
-      mats.forEach(mat => {
-        currShoppingList[mat].quantity = parseInt(prevShoppingList[mat].quantity + inventory[mat].difference);
-      });
-      return currShoppingList;
+    setShoppingList(prevShoppingList => {
+      if (prevShoppingList && mats) {        
+        const currShoppingList = structuredClone(prevShoppingList);
+        mats.forEach(mat => {
+          currShoppingList[mat].quantity = parseInt(prevShoppingList[mat].quantity + inventory[mat].difference);
+        });
+        return currShoppingList;
+      }      
     });
   }, [inventory]);
   // update checkedBox on itemID state change. 
