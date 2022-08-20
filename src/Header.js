@@ -9,16 +9,10 @@ const Header = ({setCurrPage}) => {
       <h1 className="c-header-h1">BestDeal</h1>
       <nav className="l-nav"
         onClick={(e) => { handleClick(e)}}
-      >
-      {/* <Link to="Blacksmithing"> */}
-        <div className="c-tab-label c-tab-label--first">Blacksmithing</div>
-      {/* </Link> */}
-      {/* <Link to="Leatherworking"> */}
-        <div className="c-tab-label">Leatherworking</div>
-      {/* </Link>        */}
-      {/* <Link to="Tailoring"> */}
-        <div className="c-tab-label">Tailoring</div>
-      {/* </Link>                   */}
+      >      
+        <div className="c-tab-label c-tab-label--first">Blacksmithing</div>      
+        <div className="c-tab-label">Leatherworking</div>      
+        <div className="c-tab-label">Tailoring</div>      
         <div className="c-tab-label">Others</div>
         <div className="c-tab-label">Materials</div>
       </nav>      
