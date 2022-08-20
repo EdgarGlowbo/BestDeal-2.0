@@ -10,7 +10,7 @@ function App() {
   const [currPage, setCurrPage] = useState("Blacksmithing");
  
   return (
-    // <Router>
+    <Router basename="https://edgarglowbo.github.io/BestDeal-2.0/">
       <div className="App">
         <Header        
           setCurrPage={setCurrPage}
@@ -21,7 +21,7 @@ function App() {
           </div>                               
         </div>
       </div>      
-    // </Router>       
+    </Router>       
   );
 }
 
