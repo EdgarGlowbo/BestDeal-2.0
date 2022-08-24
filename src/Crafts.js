@@ -12,7 +12,7 @@ import ShoppingList from "./ShoppingList";
 import Buyout from "./Buyout";
 const Crafts = ({ currPage }) => {  
   const craftsColRef = collection(db, "Items");  
-  const q = query(craftsColRef, where("category", "==", currPage));  
+  const q = query(craftsColRef, where("category", "==", currPage), orderBy("index", "asc"));  
   const { data:crafts, setData:setCrafts, mats } = useFetch(q, currPage); // calls useFetch with q to fetch crafts data. currPage is useFetch dependency 
   const inventoryColRef = collection(db, "Inventory");
   const inventoryQ = query(inventoryColRef, orderBy("name"));
@@ -26,19 +26,17 @@ const Crafts = ({ currPage }) => {
   const [shoppingListKeys, setShoppingListKeys] = useState([]);
   
  // AH price updates with this func
-  const updateInfo = async (e, id, ref, value) => {    
-    if (typeof value === "number") {
-      const name = e.target.name;
-      setCrafts({
-        ...crafts,
-        [id]: {
-          ...crafts[id],
-          [name]: value,
-          profit: name === 'price' ? Math.round((value * 0.95) - crafts[id].craftCost) : crafts[id].profit
-      }      
-      });
-      await updateDoc(ref, {[name]: value });
-    }    
+  const updateInfo = async (e, id, ref, value) => {      
+    const name = e.target.name;
+    setCrafts({
+      ...crafts,
+      [id]: {
+        ...crafts[id],
+        [name]: value,
+        profit: Math.round((value * 0.95) - crafts[id].craftCost)
+    }      
+    });
+    await updateDoc(ref, {[name]: value });      
   }
   // On selling event checked item's materials are substracted from inventory. Return shoppingListObj with new inventory values
   const substractMats = () => {            
@@ -49,7 +47,7 @@ const Crafts = ({ currPage }) => {
         const recipe = crafts[craftID].recipe;            
         Object.keys(recipe).forEach(mat => {
           matsSet.add(mat);        
-          currInventory[mat].quantity -= recipe[mat];                  
+          currInventory[mat].quantity -= Math.round(recipe[mat] * 10) / 10;
         });                                         
       });      
       matsSet.forEach(mat => currInventory[mat].difference = 0);      
@@ -104,7 +102,7 @@ const Crafts = ({ currPage }) => {
       craftsObj[item].profit = 0;
       const recipe = crafts[item].recipe;
       Object.keys(recipe).forEach(mat => {
-        craftsObj[item].craftCost += inventory[mat].price * recipe[mat];
+        craftsObj[item].craftCost += inventory[mat].price === '' ? 0 : inventory[mat].price * recipe[mat];
       });
       craftsObj[item].profit = Math.round((craftsObj[item].price * 0.95) - craftsObj[item].craftCost);
     });      
@@ -115,8 +113,7 @@ const Crafts = ({ currPage }) => {
       <div className="l-left-side-bar">
         {inventory &&<ShoppingList
           mats={mats}
-          inventory={inventory}
-          setInventory={setInventory}
+          inventory={inventory}          
           crafts={crafts}
           itemID={itemID}
           checkedBox={checkedBox}
@@ -130,8 +127,7 @@ const Crafts = ({ currPage }) => {
         buyoutIsDisplayed={buyoutIsDisplayed}
         setBuyoutIsDisplayed={setBuyoutIsDisplayed}
         shoppingListKeys={shoppingListKeys}
-        inventory={inventory}
-        setInventory={setInventory}
+        inventory={inventory}        
         mats={mats}
       />}
       <div className="m-crafts">
@@ -160,14 +156,15 @@ const Crafts = ({ currPage }) => {
                             e,
                             item,
                             doc(db, "Items", item),
-                            value !== value ? 0 : parseInt(e.target.value) // NaN is unequal to itself. If value !== value then use 0
+                            value !== value ? '' : value // NaN is unequal to itself. If value !== value then use 0
                           )
                         }
                       }
                       name="price"
+                      autoComplete="off"
                     />                    
                     <span className="c-item__name">{crafts[item].name}</span>        
-                    <span className="c-item__profit">{crafts[item].profit >= 0 ? `$${crafts[item].profit}` : `-$${Math.abs(crafts[item].profit)}`}</span>                                            
+                    <span className="c-item__profit">{crafts[item].profit >= 0 ? `$${crafts[item].profit}` : `-$${Math.abs(crafts[item].profit)}`}</span>                                                                
                     <input className="c-item__sell-input"
                       type="checkbox"
                       tabIndex={-1}

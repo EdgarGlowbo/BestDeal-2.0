@@ -33,8 +33,7 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                   <span className="c-inventory-item__label">Price:</span>
                   <input
                     className="c-inventory-item__input c-inventory-item__input-price"
-                    name="price"
-                    type="number"
+                    name="price"                    
                     value={inventory[mat].price}
                     onChange={(e) => {
                       const value = parseInt(e.target.value);
@@ -42,7 +41,7 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                         e,
                         mat,
                         doc(db, "Inventory", mat),
-                        value !== value ? 0 : value
+                        value !== value ? '' : value
                       )
                     }}
                     autoComplete="off"
@@ -52,8 +51,7 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                   <span className="c-inventory-item__label">Quantity:</span>
                   <input
                     className="c-inventory-item__input c-inventory-item__input-quantity"
-                    name="quantity"
-                    type="number"
+                    name="quantity"                    
                     value={inventory[mat].quantity}
                     onChange={(e) => {
                       const value = parseInt(e.target.value);
@@ -61,7 +59,7 @@ const Inventory = ({ mats, inventory, setInventory }) => {
                         e,
                         mat,
                         doc(db, "Inventory", mat),
-                        value !== value ? 0 : value
+                        value !== value ? '' : value
                       )
                     }}
                     autoComplete="off"

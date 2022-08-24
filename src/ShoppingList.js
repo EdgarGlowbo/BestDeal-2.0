@@ -5,19 +5,6 @@ const ShoppingList = ({
   itemID, checkedBox, setCheckedBox,
   setBuyoutIsDisplayed, setShoppingListKeys, shoppingListKeys
 }) => {  
-  // const createShoppingList = () => {
-  //   const shoppingListObj = {};  
-  //   mats.forEach(mat => {      
-  //     Object.assign(shoppingListObj, {
-  //       [mat]: {
-  //         name: inventory[mat].name,
-  //         quantity: 0 - inventory[mat].quantity
-  //       }
-  //     });
-  //   });    
-  //   return shoppingListObj;
-  // };
-  // const [shoppingList, setShoppingList] = useState(createShoppingList());
   const [shoppingList, setShoppingList] = useState({});
   useEffect(() => {    
     const shoppingListObj = {};  
@@ -25,7 +12,7 @@ const ShoppingList = ({
       Object.assign(shoppingListObj, {
         [mat]: {
           name: inventory[mat].name,
-          quantity: 0 - inventory[mat].quantity
+          quantity: 0 - (inventory[mat].quantity === '' ? 0 : inventory[mat].quantity)
         }
       });
     });    
