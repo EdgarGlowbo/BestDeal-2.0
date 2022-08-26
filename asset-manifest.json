@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/BestDeal-2.0/static/css/main.c4a97268.css",
-    "main.js": "/BestDeal-2.0/static/js/main.5694164e.js",
+    "main.js": "/BestDeal-2.0/static/js/main.cceb9bdc.js",
     "index.html": "/BestDeal-2.0/index.html",
     "main.c4a97268.css.map": "/BestDeal-2.0/static/css/main.c4a97268.css.map",
-    "main.5694164e.js.map": "/BestDeal-2.0/static/js/main.5694164e.js.map"
+    "main.cceb9bdc.js.map": "/BestDeal-2.0/static/js/main.cceb9bdc.js.map"
   },
   "entrypoints": [
     "static/css/main.c4a97268.css",
-    "static/js/main.5694164e.js"
+    "static/js/main.cceb9bdc.js"
   ]
 }
