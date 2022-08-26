@@ -127,6 +127,7 @@ const Crafts = ({ currPage }) => {
         buyoutIsDisplayed={buyoutIsDisplayed}
         setBuyoutIsDisplayed={setBuyoutIsDisplayed}
         shoppingListKeys={shoppingListKeys}
+        setInventory={setInventory}
         inventory={inventory}        
         mats={mats}
       />}

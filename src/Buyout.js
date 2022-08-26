@@ -3,19 +3,25 @@ import { useEffect } from "react";
 import { db } from "./firebaseConfig";
 
 const Buyout = ({ buyoutIsDisplayed, setBuyoutIsDisplayed, shoppingListKeys, inventory, setInventory, mats }) => {    
-  const buyOnSubmit = async (e) => {
+  const buyOnSubmit = (e) => {
     e.preventDefault();
     e.target.price.focus(); // Set focus on 
     const mat = shoppingListKeys[0];
-    const docRef = doc(db, "Inventory", mat);
-    let sumPrice = 0;    
-    let sumQuantity = 0;    
+    const docRef = doc(db, "Inventory", mat);        
     const price = parseInt(e.target.price.value);
     const quantity = parseInt(e.target.quantity.value);
     setInventory(prevInventory => {          
-      sumPrice = (prevInventory[mat].price * prevInventory[mat].quantity) + (price * quantity); // parenthesis: if quantity is 0 then price is irrelevant
-      sumQuantity = prevInventory[mat].quantity + quantity;
+      const sumPrice = (prevInventory[mat].price * prevInventory[mat].quantity) + (price * quantity); // parenthesis: if quantity is 0 then price is irrelevant
+      const sumQuantity = prevInventory[mat].quantity + quantity;
       mats.forEach(mat => prevInventory[mat].difference = 0); // reset every mat diff to 0 
+      const updateInventory = async () => {
+        console.log({sumPrice, sumQuantity});
+        await updateDoc(docRef, {
+          price: sumPrice / sumQuantity,
+          quantity: sumQuantity
+        });        
+      }
+      updateInventory();
       return ({
         ...prevInventory,
         [mat]: {
@@ -25,12 +31,8 @@ const Buyout = ({ buyoutIsDisplayed, setBuyoutIsDisplayed, shoppingListKeys, inv
           quantity: Math.round(sumQuantity)
         }
       })
-    });
-    e.target.reset(); // reset form fields
-    await updateDoc(docRef, {
-      price: sumPrice / sumQuantity,
-      quantity: sumQuantity
-    });
+    });    
+    e.target.reset(); // reset form fields    
   }
   // Toggles box-shadow (dark background) when buyout component is displayed
   useEffect(() => {
@@ -45,7 +47,7 @@ const Buyout = ({ buyoutIsDisplayed, setBuyoutIsDisplayed, shoppingListKeys, inv
       buyoutForm.classList.remove('m-buyout--focus');
       setBuyoutIsDisplayed(false);      
     }  
-  }, [shoppingListKeys]);
+  }, [shoppingListKeys]);  
   return (
     <form
       className="m-buyout"
